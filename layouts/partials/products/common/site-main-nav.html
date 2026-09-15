@@ -1,12 +1,24 @@
 <nav class="navbar navbar-expand navbar-light justify-content-center">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ "products/" | absURL }}">All</a>
+            <a class="nav-link" href="{{ "products/" | absURL }}" data-i18n="all">Tümü</a>
         </li>
         {{ range ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
         <li class="nav-item">
-            <a class="nav-link" href="{{ .Permalink }}">{{ .Title | title }}</a>
+            <a class="nav-link nav-cat" href="{{ .Permalink }}">{{ .Title | title }}</a>
         </li>
         {{ end }}
     </ul>
+    <div class="lang-dropdown" id="langDropdown">
+        <button class="lang-toggle" id="langToggle">
+            <span id="langLabel">TR</span>
+            <span class="lang-arrow">▾</span>
+        </button>
+        <ul class="lang-menu" id="langMenu">
+            <li><button class="lang-btn" data-lang="tr" data-label="TR">Türkçe</button></li>
+            <li><button class="lang-btn" data-lang="ka" data-label="KA">ქართული</button></li>
+            <li><button class="lang-btn" data-lang="ru" data-label="RU">Русский</button></li>
+            <li><button class="lang-btn" data-lang="en" data-label="EN">English</button></li>
+        </ul>
+    </div>
 </nav>

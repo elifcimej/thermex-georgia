@@ -1,7 +1,7 @@
 <a class="col-6 col-lg-3" href="{{ .RelPermalink }}" style="color: inherit;">
     <img class="b-lazy img-fluid text-center" data-src="{{ .Params.thumbnailImage | absURL }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
     <p class="text-left">
-        <span style="font-size: 13px">{{ .Params.title }}</span>
+        <span class="product-title" {{ if .File }}data-slug="{{ .File.ContentBaseName }}"{{ end }} style="font-size: 13px">{{ .Params.title }}</span>
         <br/>
         <span style="font-size: 16px">
             {{ if .Params.actualPrice }}
@@ -25,9 +25,9 @@
                     {{ $.Scratch.Set "inStock" "true" }}
                 {{ end }}
             {{ end }}
-            {{ if eq ($.Scratch.Get "isMinimumVariantPrice") "true" }} From {{ end }}
-            {{ $.Scratch.Get "minimumPrice" }} 
-            {{ if not (eq ($.Scratch.Get "inStock") "true")}} <span class="font-weight-bold">— Sold Out</span> {{ end }}
+            {{ if eq ($.Scratch.Get "isMinimumVariantPrice") "true" }}<span data-i18n="from">başlangıç fiyatı</span> {{ end }}
+            {{ $.Scratch.Get "minimumPrice" }}
+            {{ if not (eq ($.Scratch.Get "inStock") "true")}} <span class="font-weight-bold" data-i18n="out_of_stock">— Stokta Yok</span> {{ end }}
         </span>
     </p>
 </a>

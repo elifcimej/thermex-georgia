@@ -2,3 +2,412 @@
 <script src="{{ "js/lodash.min.js" | absURL }}"></script>
 <script src="{{ "js/blazy.min.js" | absURL }}"></script>
 <script src="{{ "js/main.js" | absURL }}"></script>
+<script>
+(function () {
+
+  /* ── UI çevirileri ── */
+  var T = {
+    tr: { all:"Tümü", out_of_stock:"— Stokta Yok", from:"başlangıç fiyatı", "Pelet Soba":"Pelet Soba", "Fırınlı Şömine":"Fırınlı Şömine", "Fırınsız Şömine":"Fırınsız Şömine", "Pelet Ve Odun Şöminesi":"Pelet Ve Odun Şöminesi", "Çeşme Modelleri":"Çeşme Modelleri", "Kuzineli Şömine":"Kuzineli Şömine" },
+    ka: { all:"ყველა", out_of_stock:"— არ არის მარაგში", from:"საწყისი ფასი", "Pelet Soba":"პელეტის ღუმელი", "Fırınlı Şömine":"ღუმელიანი ბუხარი", "Fırınsız Şömine":"ბუხარი", "Pelet Ve Odun Şöminesi":"პელეტ-შეშის ბუხარი", "Çeşme Modelleri":"შადრევნის მოდელები", "Kuzineli Şömine":"სამზარეულო ბუხარი" },
+    ru: { all:"Все", out_of_stock:"— Нет в наличии", from:"от", "Pelet Soba":"Пеллетная печь", "Fırınlı Şömine":"Камин с духовкой", "Fırınsız Şömine":"Камин", "Pelet Ve Odun Şöminesi":"Пеллетно-дровяной камин", "Çeşme Modelleri":"Модели фонтанов", "Kuzineli Şömine":"Камин с плитой" },
+    en:  { all:"All", out_of_stock:"— Out of Stock", from:"from", "Pelet Soba":"Pellet Stove", "Fırınlı Şömine":"Fireplace with Oven", "Fırınsız Şömine":"Fireplace", "Pelet Ve Odun Şöminesi":"Pellet & Wood Fireplace", "Çeşme Modelleri":"Fountain Models", "Kuzineli Şömine":"Cooking Fireplace" }
+  };
+
+  /* ── Teknik terim çevirileri (H3 başlıklar + güçlü etiketler) ── */
+  var TERMS = {
+    ka: {
+      "Genel Ölçüler":"ზოგადი ზომები","Fırın Ölçüleri":"ღუმელის ზომები","Teknik Özellikler":"ტექნიკური მახასიათებლები","Özellikler":"მახასიათებლები","Yanma Haznesi Ölçüleri":"წვის კამერის ზომები","Ürün Özellikleri":"პროდუქტის მახასიათებლები",
+      "Yükseklik:":"სიმაღლე:","Genişlik:":"სიგანე:","Derinlik:":"სიღრმე:","En:":"სიგრძე:","Ağırlık:":"წონა:","Isıtma alanı:":"გათბობის ფართობი:","Ölçüler:":"ზომები:","Malzeme:":"მასალა:","Boya:":"საღებავი:","Boy:":"სიმაღლე:","Lavabo:":"აუზი:","Musluk–Gider Arası:":"ონკანი–ჩამდინარე:","Üst saç:":"ზედა ფოლადი:","Taban:":"ბაზა:","Yakıt haznesi:":"საწვავის ბუნკერი:","Gövde:":"კოლოფი:","Cam:":"მინა:","Tutma kolları:":"სახელურები:","Renk:":"ფერი:","Termometre:":"თერმომეტრი:","Yakıt:":"საწვავი:","Kullanım:":"გამოყენება:","Tekerlekler:":"ბორბლები:","Gövde kalınlığı:":"კოლოფის სისქე:","Cam fitil:":"მინის ფითილი:","Muhafaza saç:":"დამცავი ფოლადი:","Tutma:":"სახელური:"
+    },
+    ru: {
+      "Genel Ölçüler":"Общие размеры","Fırın Ölçüleri":"Размеры духовки","Teknik Özellikler":"Технические характеристики","Özellikler":"Характеристики","Yanma Haznesi Ölçüleri":"Размеры топки","Ürün Özellikleri":"Характеристики товара",
+      "Yükseklik:":"Высота:","Genişlik:":"Ширина:","Derinlik:":"Глубина:","En:":"Длина:","Ağırlık:":"Вес:","Isıtma alanı:":"Площадь обогрева:","Ölçüler:":"Размеры:","Malzeme:":"Материал:","Boya:":"Покраска:","Boy:":"Высота:","Lavabo:":"Мойка:","Musluk–Gider Arası:":"Кран–Слив:","Üst saç:":"Верхний лист:","Taban:":"Основание:","Yakıt haznesi:":"Топливный бункер:","Gövde:":"Корпус:","Cam:":"Стекло:","Tutma kolları:":"Ручки:","Renk:":"Цвет:","Termometre:":"Термометр:","Yakıt:":"Топливо:","Kullanım:":"Применение:","Tekerlekler:":"Колёса:","Gövde kalınlığı:":"Толщина корпуса:","Cam fitil:":"Стеклянный фитиль:","Muhafaza saç:":"Защитный лист:","Tutma:":"Рукоятка:"
+    },
+    en: {
+      "Genel Ölçüler":"General Dimensions","Fırın Ölçüleri":"Oven Dimensions","Teknik Özellikler":"Technical Specifications","Özellikler":"Features","Yanma Haznesi Ölçüleri":"Combustion Chamber Dimensions","Ürün Özellikleri":"Product Features",
+      "Yükseklik:":"Height:","Genişlik:":"Width:","Derinlik:":"Depth:","En:":"Length:","Ağırlık:":"Weight:","Isıtma alanı:":"Heating area:","Ölçüler:":"Dimensions:","Malzeme:":"Material:","Boya:":"Paint:","Boy:":"Height:","Lavabo:":"Basin:","Musluk–Gider Arası:":"Tap–Drain Gap:","Üst saç:":"Top plate:","Taban:":"Base:","Yakıt haznesi:":"Fuel hopper:","Gövde:":"Body:","Cam:":"Glass:","Tutma kolları:":"Handles:","Renk:":"Color:","Termometre:":"Thermometer:","Yakıt:":"Fuel:","Kullanım:":"Usage:","Tekerlekler:":"Wheels:","Gövde kalınlığı:":"Body thickness:","Cam fitil:":"Glass wick:","Muhafaza saç:":"Protective sheet:","Tutma:":"Handle:"
+    }
+  };
+
+  /* ── Ürün açıklaması çevirileri (slug → lang → HTML) ── */
+  var DESCS = {
+    "paris-firinli-somine":{
+      titleKa:"პარიზი ღუმელიანი ბუხარი", titleRu:"Камин Париж с духовкой", titleEn:"Paris Oven Fireplace",
+      ka:"გამძლე ჩამოსხმული კონსტრუქცია და ღუმელი გრძელვადიან გათბობას უზრუნველყოფს. გათბობის ფართობი <strong>100 მ²</strong>-მდე.",
+      ru:"Прочный чугунный корпус с духовкой для долгосрочного отопления. Площадь обогрева до <strong>100 м²</strong>.",
+      en:"Durable cast iron with oven for long-lasting heating. Heating capacity up to <strong>100 m²</strong>."
+    },
+    "zumrut-pelet-odun-somine":{
+      titleKa:"მარაგდი პელეტ-შეშის ბუხარი", titleRu:"Изумруд пеллетно-дровяной камин", titleEn:"Emerald Pellet & Wood Fireplace",
+      ka:"მრავალმხრივი ჩამოსხმული ბუხარი პელეტით ან შეშით. გათბობის ფართობი <strong>55 მ²</strong>-მდე.",
+      ru:"Многофункциональный чугунный камин на пеллетах и дровах. Площадь обогрева до <strong>55 м²</strong>.",
+      en:"Versatile cast iron fireplace for pellet and wood fuel. Heating capacity up to <strong>55 m²</strong>."
+    },
+    "caldera-pelet-odun-somine":{
+      titleKa:"ოსკარი ბუხარი", titleRu:"Камин Оскар", titleEn:"Oscar Fireplace",
+      ka:"ძლიერი ჩამოსხმული კოლოფი პელეტსა და შეშას ეფექტურად იყენებს. გათბობის ფართობი <strong>55 მ²</strong>-მდე.",
+      ru:"Мощный чугунный корпус эффективно использует пеллеты и дрова. Площадь обогрева до <strong>55 м²</strong>.",
+      en:"Powerful cast iron body efficiently uses pellet and wood fuel. Heating capacity up to <strong>55 m²</strong>."
+    },
+    "vesta-pelet-odun-somine":{
+      titleKa:"სრულიად ჩამოსხმული ღუმელიანი ბუხარი", titleRu:"Полнолитой камин с духовкой", titleEn:"Full Cast Iron Oven Fireplace",
+      ka:"სრულიად ჩამოსხმული ბუხარი ღუმელით – გათბობა და სამზარეულო ერთდროულად. გათბობის ფართობი <strong>55 მ²</strong>-მდე.",
+      ru:"Цельнолитой камин с духовкой — отопление и приготовление пищи одновременно. Площадь обогрева до <strong>55 м²</strong>.",
+      en:"Full cast iron with oven — heating and cooking at the same time. Heating capacity up to <strong>55 m²</strong>."
+    },
+    "mercan-yatay-firinli-somine":{
+      titleKa:"სრულიად ჩამოსხმული ბუხარი", titleRu:"Полнолитой камин", titleEn:"Full Cast Iron Fireplace",
+      ka:"სრულიად ჩამოსხმული კოლოფი მაქსიმალურ სიცხეს ინარჩუნებს. გათბობის ფართობი <strong>55 მ²</strong>-მდე.",
+      ru:"Цельнолитой корпус для максимального сохранения тепла. Площадь обогрева до <strong>55 м²</strong>.",
+      en:"Full cast iron body for maximum heat retention. Heating capacity up to <strong>55 m²</strong>."
+    },
+    "kucuk-plazma-somine":{
+      titleKa:"კალდერა პელეტ-შეშის ბუხარი", titleRu:"Кальдера пеллетно-дровяной камин", titleEn:"Caldera Pellet & Wood Fireplace",
+      ka:"კომპაქტური ჩამოსხმული ბუხარი მცირე სივრცისთვის. გათბობის ფართობი <strong>70 მ²</strong>-მდე.",
+      ru:"Компактный чугунный камин для небольших помещений. Площадь обогрева до <strong>70 м²</strong>.",
+      en:"Compact cast iron fireplace ideal for small spaces. Heating capacity up to <strong>70 m²</strong>."
+    },
+    "oscar-firinsiz-somine":{
+      titleKa:"ვესტა პელეტ-შეშის ბუხარი", titleRu:"Веста пеллетно-дровяной камин", titleEn:"Vesta Pellet & Wood Fireplace",
+      ka:"მოდური დიზაინი ორმაგი საწვავით სახლს სითბოსა და სილამაზეს ანიჭებს. გათბობის ფართობი <strong>55 მ²</strong>-მდე.",
+      ru:"Стильный дизайн с поддержкой двух видов топлива. Площадь обогрева до <strong>55 м²</strong>.",
+      en:"Elegant design with dual fuel support. Heating capacity up to <strong>55 m²</strong>."
+    },
+    "tam-dokum-firinli-somine":{
+      titleKa:"მილანი სამზარეულო ბუხარი", titleRu:"Милан камин с плитой", titleEn:"Milan Cooking Fireplace",
+      ka:"ჩამოსხმული კოლოფი და ღუმელი გათბობასა და სამზარეულოს ერთ პროდუქტში აერთიანებს. გათბობის ფართობი <strong>55 მ²</strong>-მდე.",
+      ru:"Чугунный камин с духовкой — отопление и готовка в одном. Площадь обогрева до <strong>55 м²</strong>.",
+      en:"Cast iron with oven — heating and cooking in one product. Heating capacity up to <strong>55 m²</strong>."
+    },
+    "tam-dokum-firinsiz-somine":{
+      titleKa:"მერჯანი ჰორიზონტალური ბუხარი", titleRu:"Коралл горизонтальный камин", titleEn:"Mercan Horizontal Fireplace",
+      ka:"სრულიად ჩამოსხმული ბუხარი მაქსიმალური სიმძლავრით. გათბობის ფართობი <strong>120 მ²</strong>-მდე.",
+      ru:"Цельнолитой камин максимальной мощности. Площадь обогрева до <strong>120 м²</strong>.",
+      en:"Full cast iron fireplace at maximum power. Heating capacity up to <strong>120 m²</strong>."
+    },
+    "milan-kuzineli-somine":{
+      titleKa:"მცირე პლაზმა ბუხარი", titleRu:"Малый плазменный камин", titleEn:"Small Plasma Fireplace",
+      ka:"ფართო საზარეულო ზედაპირი სამზარეულოსა და მისაღებ ოთახს ათბობს. გათბობის ფართობი <strong>70 მ²</strong>-მდე.",
+      ru:"Широкая варочная поверхность обогревает кухню и гостиную. Площадь обогрева до <strong>70 м²</strong>.",
+      en:"Wide cooking surface heats kitchen and living room together. Heating capacity up to <strong>70 m²</strong>."
+    },
+    "bursa-pelet-soba":{
+      titleKa:"ბურსა პელეტის ღუმელი", titleRu:"Пеллетная печь Бурса", titleEn:"Bursa Pellet Stove",
+      ka:"მინის კოლოფი ალს ავლენს, ბორბლები ადვილ გადაადგილებას იძლევა. გათბობის ფართობი <strong>40 მ²</strong>-მდე.",
+      ru:"Стеклянный корпус демонстрирует пламя, колёса облегчают перемещение. Площадь обогрева до <strong>40 м²</strong>.",
+      en:"Glass body showcases the flame, wheels for easy mobility. Heating capacity up to <strong>40 m²</strong>."
+    },
+    "roket-soba":{
+      titleKa:"რაკეტა ღუმელი", titleRu:"Ракетная печь", titleEn:"Rocket Stove",
+      ka:"ზედა სამზარეულო – გათბობა და საჭმლის მომზადება ერთდროულად. გათბობის ფართობი <strong>30 მ²</strong>-მდე.",
+      ru:"Верхняя плита позволяет готовить и отапливать одновременно. Площадь обогрева до <strong>30 м²</strong>.",
+      en:"Top cooking surface — heat and cook at the same time. Heating capacity up to <strong>30 m²</strong>."
+    },
+    "kasali-roket-soba":{
+      titleKa:"ყუთიანი რაკეტა ღუმელი", titleRu:"Ракетная печь в корпусе", titleEn:"Cased Rocket Stove",
+      ka:"ლაბირინთის კასა, გამჭვირვალე მინა და ბორბლები – გარე სივრცისა და პიკნიკისთვის. გათბობის ფართობი <strong>40 მ²</strong>-მდე.",
+      ru:"Кожух лабиринт, стеклянный корпус и колёса — для улицы и пикника. Площадь обогрева до <strong>40 м²</strong>.",
+      en:"Labyrinth casing, glass body and wheels — great for outdoors and picnics. Heating capacity up to <strong>40 m²</strong>."
+    },
+    "kasali-pelet-soba":{
+      titleKa:"ყუთიანი პელეტის ღუმელი", titleRu:"Пеллетная печь в корпусе", titleEn:"Cased Pellet Stove",
+      ka:"თანამედროვე ფოლადის ბუხარი – ესთეტიკა და სიძლიერე ერთად. გათბობის ფართობი <strong>40 მ²</strong>-მდე.",
+      ru:"Современный стальной корпус — эстетика и мощность вместе. Площадь обогрева до <strong>40 м²</strong>.",
+      en:"Modern steel body combining aesthetics and power. Heating capacity up to <strong>40 m²</strong>."
+    },
+    "firinli-pelet-soba":{
+      titleKa:"ღუმელიანი პელეტის ღუმელი", titleRu:"Пеллетная печь с духовкой", titleEn:"Pellet Stove with Oven",
+      ka:"პელეტი, შეშა და ქვანახშირი ერთდროულად – თანამედროვე და ეკოლოგიური. გათბობის ფართობი <strong>50 მ²</strong>-მდე.",
+      ru:"Пеллеты, дрова и уголь одновременно — современно и экологично. Площадь обогрева до <strong>50 м²</strong>.",
+      en:"Use pellets, wood and coal simultaneously — modern and eco-friendly. Heating capacity up to <strong>50 m²</strong>."
+    },
+    "pelet-soba":{
+      titleKa:"პელეტის ღუმელი", titleRu:"Пеллетная печь", titleEn:"Pellet Stove",
+      ka:"კერამიკული მინის კარები და ქრომის სახელურები – ფუნქციური და ლამაზი. გათბობის ფართობი <strong>40 მ²</strong>-მდე.",
+      ru:"Керамические стёкла и хромированные ручки — функционально и красиво. Площадь обогрева до <strong>40 м²</strong>.",
+      en:"Ceramic glass doors and chrome handles — functional and beautiful. Heating capacity up to <strong>40 m²</strong>."
+    },
+    "dik-pelet-soba":{
+      titleKa:"ვერტიკალური პელეტის ღუმელი", titleRu:"Вертикальная пеллетная печь", titleEn:"Vertical Pellet Stove",
+      ka:"პელეტის საწვავი ეკონომიური, ეკოლოგიური და ხანგრძლივი გათბობისთვის. გათბობის ფართობი <strong>40 მ²</strong>-მდე.",
+      ru:"Пеллетное топливо для экономичного и долгосрочного обогрева. Площадь обогрева до <strong>40 м²</strong>.",
+      en:"Pellet fuel for economical and long-lasting heating. Heating capacity up to <strong>40 m²</strong>."
+    },
+    "bahce-cesmesi":{
+      titleKa:"ბაღის შადრევანი", titleRu:"Садовый фонтан", titleEn:"Garden Fountain",
+      ka:"", ru:"", en:""
+    },
+    "kare-model-cesme":{
+      titleKa:"კვადრატური მოდელი", titleRu:"Квадратная модель", titleEn:"Square Model",
+      ka:"კვადრატური ჩამოსხმული შადრევანი სპილენძის ონკანით ბაღებისა და გარე სივრცისთვის.",
+      ru:"Квадратный чугунный фонтан с латунным краном для садов и улицы.",
+      en:"Square cast iron fountain with brass tap for gardens and outdoor spaces."
+    },
+    "dokum-topuz-meydan-cesme":{
+      titleKa:"ჩამოსხმული ტოპუზიანი შადრევანი", titleRu:"Чугунный фонтан с шаровым навершием", titleEn:"Cast Iron Ball-Top Fountain",
+      ka:"ტოპუზიანი სვეტი და ფართო ტუმბო – კლასიკური ჩამოსხმული შადრევანი პარკებისთვის.",
+      ru:"Колонна с шаровым навершием и широкий резервуар — классический фонтан для парков.",
+      en:"Column with ball finial and wide basin — classic cast iron fountain for parks."
+    }
+  };
+
+  /* ── Spec değeri çevirileri (strong sonrası metin) ── */
+  var VALS = {
+    ka: {
+      "1.2 mm paslanmaz çelik":"1.2 მმ მჟავაგამძლე ფოლადი",
+      "2 mm – uzun ömürlü kullanım":"2 მმ – გრძელვადიანი გამოყენება",
+      "Seramik cam kapaklar":"კერამიკული მინის კარები",
+      "Krom kaplama":"ქრომის დაფარვა",
+      "Entegre fırın termometresi":"ინტეგრირებული ღუმელის თერმომეტრი",
+      "Pelet, odun ve kömür ile kullanım imkânı":"პელეტი, შეშა და ქვანახშირი ერთდროულად",
+      "Siyah":"შავი",
+      "Siyah, Kırmızı, Yeşil":"შავი, წითელი, მწვანე",
+      "Siyah, Yeşil, Kırmızı":"შავი, მწვანე, წითელი",
+      "2 mm – dayanıklılığın garantisi":"2 მმ – გამძლეობის გარანტია",
+      "30 × 40 × 200 cm – portatif ve şık":"30 × 40 × 200 სმ – პორტატული და სტილური",
+      "5 mm yanmaz cam – maksimum güvenlik":"5 მმ ცეცხლგამძლე მინა – მაქსიმალური უსაფრთხოება",
+      "1.2 mm – tam koruma, tam performans":"1.2 მმ – სრული დაცვა, სრული შესრულება",
+      "Ahşap kulp & metal tutma kolu – taşınabilirlik ve tasarım bir arada":"ხის სახელური & მეტალის სახელური – პორტატულობა და დიზაინი ერთად",
+      "Paslanmaz gövdeli – kolay hareket, her alanda pratik taşıma ve hareket ettirme imkânı":"მჟავაგამძლე კოლოფი – ადვილი გადაადგილება, ნებისმიერ ადგილზე",
+      "Paslanmaz gövdeli – kolay hareket, her alanda pratik taşıma":"მჟავაგამძლე კოლოფი – ადვილი გადაადგილება, ნებისმიერ ადგილზე",
+      "40 m²'ye kadar":"40 მ²-მდე",
+      "35 × 45 × 115 cm – kompakt, az yer kaplar":"35 × 45 × 115 სმ – კომპაქტური, ნაკლები ადგილი სჭირდება",
+      "İç ve dış mekân":"შიდა და გარე სივრცე",
+      "Dilediğin yere kolayca taşı":"ადვილად გადაიტანე ნებისმიერ ადგილზე",
+      "Pelet – ekonomik ve çevreci":"პელეტი – ეკონომიური და ეკოლოგიური",
+      "Alüminyum Döküm":"ალუმინის ჩამოსხმა",
+      "Elektrostatik":"ელექტროსტატიკური"
+    },
+    ru: {
+      "1.2 mm paslanmaz çelik":"1.2 мм нержавеющая сталь",
+      "2 mm – uzun ömürlü kullanım":"2 мм – долгосрочное использование",
+      "Seramik cam kapaklar":"Керамические стеклянные дверцы",
+      "Krom kaplama":"Хромированное покрытие",
+      "Entegre fırın termometresi":"Встроенный термометр духовки",
+      "Pelet, odun ve kömür ile kullanım imkânı":"Возможность использования пеллет, дров и угля",
+      "Siyah":"Чёрный",
+      "Siyah, Kırmızı, Yeşil":"Чёрный, Красный, Зелёный",
+      "Siyah, Yeşil, Kırmızı":"Чёрный, Зелёный, Красный",
+      "2 mm – dayanıklılığın garantisi":"2 мм – гарантия прочности",
+      "30 × 40 × 200 cm – portatif ve şık":"30 × 40 × 200 см – портативный и стильный",
+      "5 mm yanmaz cam – maksimum güvenlik":"5 мм негорючее стекло – максимальная безопасность",
+      "1.2 mm – tam koruma, tam performans":"1.2 мм – полная защита, полная производительность",
+      "Ahşap kulp & metal tutma kolu – taşınabilirlik ve tasarım bir arada":"Деревянная & металлическая ручка – мобильность и дизайн вместе",
+      "Paslanmaz gövdeli – kolay hareket, her alanda pratik taşıma ve hareket ettirme imkânı":"Нержавеющий корпус – лёгкое перемещение в любом месте",
+      "Paslanmaz gövdeli – kolay hareket, her alanda pratik taşıma":"Нержавеющий корпус – лёгкое перемещение в любом месте",
+      "40 m²'ye kadar":"40 м²'ye kadar",
+      "35 × 45 × 115 cm – kompakt, az yer kaplar":"35 × 45 × 115 см – компактный, занимает мало места",
+      "İç ve dış mekân":"Внутри и снаружи помещений",
+      "Dilediğin yere kolayca taşı":"Легко переносится куда угодно",
+      "Pelet – ekonomik ve çevreci":"Пеллеты – экономично и экологично",
+      "Alüminyum Döküm":"Алюминиевое литьё",
+      "Elektrostatik":"Электростатическая"
+    },
+    en: {
+      "1.2 mm paslanmaz çelik":"1.2 mm stainless steel",
+      "2 mm – uzun ömürlü kullanım":"2 mm – long-lasting use",
+      "Seramik cam kapaklar":"Ceramic glass doors",
+      "Krom kaplama":"Chrome plated",
+      "Entegre fırın termometresi":"Integrated oven thermometer",
+      "Pelet, odun ve kömür ile kullanım imkânı":"Compatible with pellet, wood and coal",
+      "Siyah":"Black",
+      "Siyah, Kırmızı, Yeşil":"Black, Red, Green",
+      "Siyah, Yeşil, Kırmızı":"Black, Green, Red",
+      "2 mm – dayanıklılığın garantisi":"2 mm – guaranteed durability",
+      "30 × 40 × 200 cm – portatif ve şık":"30 × 40 × 200 cm – portable and stylish",
+      "5 mm yanmaz cam – maksimum güvenlik":"5 mm fireproof glass – maximum safety",
+      "1.2 mm – tam koruma, tam performans":"1.2 mm – full protection, full performance",
+      "Ahşap kulp & metal tutma kolu – taşınabilirlik ve tasarım bir arada":"Wood & metal handle – portability and design together",
+      "Paslanmaz gövdeli – kolay hareket, her alanda pratik taşıma ve hareket ettirme imkânı":"Stainless steel body – easy movement anywhere",
+      "Paslanmaz gövdeli – kolay hareket, her alanda pratik taşıma":"Stainless steel body – easy movement anywhere",
+      "40 m²'ye kadar":"up to 40 m²",
+      "35 × 45 × 115 cm – kompakt, az yer kaplar":"35 × 45 × 115 cm – compact, takes up little space",
+      "İç ve dış mekân":"Indoor and outdoor use",
+      "Dilediğin yere kolayca taşı":"Easily carry anywhere you like",
+      "Pelet – ekonomik ve çevreci":"Pellets – economical and eco-friendly",
+      "Alüminyum Döküm":"Aluminium casting",
+      "Elektrostatik":"Electrostatic"
+    }
+  };
+
+  /* ── Serbest bullet çevirileri (strong içermeyen li) ── */
+  var BULLETS = {
+    ka: {
+      "Şeffaf cam boru ile alev görünümü":"გამჭვირვალე მინის მილი ალის ხედვით",
+      "Paslanmaz gövdeli tekerlekler – kolay hareket ve taşıma":"მჟავაგამძლე კოლოფის ბორბლები – ადვილი გადაადგილება",
+      "Ahşap kulp & metal tutma kolu":"ხის სახელური & მეტალის სახელური",
+      "Paslanmaz çelik kül temizleme tepsisi":"მჟავაგამძლე ფოლადის ნაცრის სათლი",
+      "Pelet yakıtıyla verimli ve uzun süreli ısınma":"პელეტის საწვავი – ეფექტური და გრძელვადიანი გათბობა",
+      "Üst pişirme tablası: çay, mısır, kestane ve daha fazlası":"ზედა სამზარეულო დაფა: ჩაი, სიმინდი, წაბლი და სხვა",
+      "Pelet yakıtıyla verimli ısınma":"პელეტის საწვავი – ეფექტური გათბობა",
+      "Sabit tabanlı kompakt yapı":"კომპაქტური სტრუქტურა მყარ ბაზაზე"
+    },
+    ru: {
+      "Şeffaf cam boru ile alev görünümü":"Прозрачная стеклянная труба с видом на пламя",
+      "Paslanmaz gövdeli tekerlekler – kolay hareket ve taşıma":"Колёса с нержавеющим корпусом – лёгкое перемещение",
+      "Ahşap kulp & metal tutma kolu":"Деревянная & металлическая ручка",
+      "Paslanmaz çelik kül temizleme tepsisi":"Поднос для очистки золы из нержавеющей стали",
+      "Pelet yakıtıyla verimli ve uzun süreli ısınma":"Эффективный и долгосрочный обогрев на пеллетах",
+      "Üst pişirme tablası: çay, mısır, kestane ve daha fazlası":"Верхняя плита: чай, кукуруза, каштаны и многое другое",
+      "Pelet yakıtıyla verimli ısınma":"Эффективный обогрев на пеллетах",
+      "Sabit tabanlı kompakt yapı":"Компактная конструкция на фиксированном основании"
+    },
+    en: {
+      "Şeffaf cam boru ile alev görünümü":"Transparent glass tube with flame view",
+      "Paslanmaz gövdeli tekerlekler – kolay hareket ve taşıma":"Stainless steel wheeled body – easy movement and transport",
+      "Ahşap kulp & metal tutma kolu":"Wood & metal handle",
+      "Paslanmaz çelik kül temizleme tepsisi":"Stainless steel ash cleaning tray",
+      "Pelet yakıtıyla verimli ve uzun süreli ısınma":"Efficient and long-lasting heating with pellet fuel",
+      "Üst pişirme tablası: çay, mısır, kestane ve daha fazlası":"Top cooking surface: tea, corn, chestnuts and more",
+      "Pelet yakıtıyla verimli ısınma":"Efficient heating with pellet fuel",
+      "Sabit tabanlı kompakt yapı":"Compact structure on fixed base"
+    }
+  };
+
+  /* ── Slug al ── */
+  function getSlug() {
+    var m = window.location.pathname.match(/\/products\/([^\/]+)/);
+    return m ? m[1] : null;
+  }
+
+  /* ── Ana çeviri fonksiyonu ── */
+  function applyLang(lang) {
+    var t = T[lang] || T.tr;
+    var terms = TERMS[lang] || null;
+
+    /* UI data-i18n */
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    /* Navbar kategori linkleri */
+    document.querySelectorAll('.nav-cat').forEach(function(el) {
+      if (!el.dataset.origText) el.dataset.origText = el.textContent.trim();
+      el.textContent = t[el.dataset.origText] || el.dataset.origText;
+    });
+
+    /* Ürün içeriği çevirisi */
+    var slug = getSlug();
+    document.querySelectorAll('.product-content').forEach(function(area) {
+
+      /* 1. Açıklama paragrafı */
+      var firstP = area.querySelector('p');
+      if (firstP) {
+        if (!firstP.dataset.origHtml) firstP.dataset.origHtml = firstP.innerHTML;
+        if (lang === 'tr') {
+          firstP.innerHTML = firstP.dataset.origHtml;
+        } else if (slug && DESCS[slug] && DESCS[slug][lang]) {
+          firstP.innerHTML = DESCS[slug][lang];
+        }
+      }
+
+      /* 2. H3 başlıkları */
+      if (terms) {
+        area.querySelectorAll('h3').forEach(function(h) {
+          if (!h.dataset.origText) h.dataset.origText = h.textContent.trim();
+          h.textContent = terms[h.dataset.origText] || (lang === 'tr' ? h.dataset.origText : h.textContent);
+        });
+      } else {
+        area.querySelectorAll('h3').forEach(function(h) {
+          if (h.dataset.origText) h.textContent = h.dataset.origText;
+        });
+      }
+
+      /* 3. <strong> etiketleri */
+      if (terms) {
+        area.querySelectorAll('strong').forEach(function(s) {
+          if (!s.dataset.origText) s.dataset.origText = s.textContent.trim();
+          var tr = terms[s.dataset.origText];
+          if (tr) s.textContent = tr;
+          else if (lang === 'tr' && s.dataset.origText) s.textContent = s.dataset.origText;
+        });
+      } else {
+        area.querySelectorAll('strong').forEach(function(s) {
+          if (s.dataset.origText) s.textContent = s.dataset.origText;
+        });
+      }
+
+      /* 4. Li değerleri (strong sonrası metin) ve serbest bullet metinleri */
+      var vals = VALS[lang] || null;
+      var bullets = BULLETS[lang] || null;
+      area.querySelectorAll('li').forEach(function(li) {
+        var strong = li.querySelector('strong');
+        if (strong) {
+          var node = strong.nextSibling;
+          while (node) {
+            if (node.nodeType === 3) {
+              if (!node._origText) node._origText = node.textContent;
+              if (lang === 'tr') {
+                node.textContent = node._origText;
+              } else if (vals) {
+                var trimmed = node._origText.trim();
+                if (vals[trimmed]) node.textContent = node._origText.replace(trimmed, vals[trimmed]);
+              }
+              break;
+            }
+            node = node.nextSibling;
+          }
+        } else {
+          if (!li.dataset.origText) li.dataset.origText = li.textContent.trim();
+          if (lang === 'tr') {
+            li.textContent = li.dataset.origText;
+          } else if (bullets && bullets[li.dataset.origText]) {
+            li.textContent = bullets[li.dataset.origText];
+          }
+        }
+      });
+    });
+
+    /* 5. Ürün başlıkları */
+    document.querySelectorAll('.product-title').forEach(function(el) {
+      var s = el.dataset.slug;
+      if (!el.dataset.origText) el.dataset.origText = el.textContent.trim();
+      if (lang === 'tr') {
+        el.textContent = el.dataset.origText;
+      } else if (s && DESCS[s]) {
+        var key = 'title' + lang.charAt(0).toUpperCase() + lang.slice(1);
+        if (DESCS[s][key]) el.textContent = DESCS[s][key];
+      }
+    });
+
+    /* Aktif buton + toggle başlığını güncelle */
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.classList.toggle('lang-active', btn.dataset.lang === lang);
+    });
+    var activeBtn = document.querySelector('.lang-btn[data-lang="' + lang + '"]');
+    if (activeBtn) {
+      var labelEl = document.getElementById('langLabel');
+      if (labelEl) labelEl.textContent = activeBtn.dataset.label || lang.toUpperCase();
+    }
+
+    localStorage.setItem('thermex_lang', lang);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var saved = localStorage.getItem('thermex_lang') || 'tr';
+    applyLang(saved);
+
+    /* Dropdown aç/kapat */
+    var dropdown = document.getElementById('langDropdown');
+    var toggle = document.getElementById('langToggle');
+    if (toggle && dropdown) {
+      toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+      });
+      document.addEventListener('click', function() {
+        dropdown.classList.remove('open');
+      });
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        applyLang(btn.dataset.lang);
+        if (dropdown) dropdown.classList.remove('open');
+      });
+    });
+  });
+})();
+</script>

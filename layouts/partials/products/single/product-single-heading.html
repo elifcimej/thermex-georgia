@@ -1,8 +1,8 @@
-<h1>{{ .Title }}</h1>
+<h1 class="product-title" data-slug="{{ .File.ContentBaseName }}">{{ .Title }}</h1>
 <p>
-    <span class="product-compare-price"style="text-decoration: line-through">{{ .Params.comparePrice }}</span>
+    <span class="product-compare-price" style="text-decoration: line-through">{{ .Params.comparePrice }}</span>
     <span class="product-actual-price">{{ .Params.actualPrice }}</span>
-    <span class="product-not-in-stock" class="font-weight-bold" {{ if .Params.inStock }} style="display:none" {{end}}>— Sold Out</span>
+    <span class="product-not-in-stock" {{ if .Params.inStock }} style="display:none" {{end}} data-i18n="out_of_stock">— Stokta Yok</span>
 </p>
 <p>
     {{ range $index, $element := .Params.options }}

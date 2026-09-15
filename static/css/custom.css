@@ -1,0 +1,370 @@
+/* ── THERMEX GEORGIA – Custom Theme ── */
+
+:root {
+  --brand-dark:   #1a1a1a;
+  --brand-red:    #c0392b;
+  --brand-orange: #e67e22;
+  --brand-light:  #f5f5f0;
+  --card-bg:      #ffffff;
+  --text-main:    #2c2c2c;
+  --text-muted:   #777;
+  --shadow:       0 4px 18px rgba(0,0,0,0.10);
+  --radius:       10px;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--brand-light);
+  color: var(--text-main);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+}
+
+/* ── Site Header ── */
+header {
+  background: linear-gradient(135deg, var(--brand-dark) 60%, #2c0a0a 100%);
+  padding: 40px 20px 30px;
+  margin-bottom: 32px;
+  border-bottom: 4px solid var(--brand-red);
+}
+
+header h1 {
+  color: #ffffff;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+
+header h4 {
+  color: var(--brand-orange);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ── Navbar ── */
+.navbar {
+  background: var(--brand-dark) !important;
+  padding: 0 16px;
+  border-radius: 0;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+.navbar-nav .nav-link {
+  color: #cccccc !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 14px 18px !important;
+  transition: color 0.2s, border-bottom 0.2s;
+  border-bottom: 3px solid transparent;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--brand-orange) !important;
+  border-bottom: 3px solid var(--brand-orange);
+}
+
+/* ── Ürün Listesi Grid ── */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+/* ── Ürün Kartları ── */
+a.col-6,
+a.col-lg-3 {
+  padding: 10px;
+  text-decoration: none !important;
+  color: inherit;
+}
+
+a.col-6 {
+  display: flex;
+  flex-direction: column;
+}
+
+a.col-6 > img,
+a.col-6 > .b-lazy {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: #fff;
+  border-radius: var(--radius) var(--radius) 0 0;
+  border: 1px solid #e8e8e8;
+  padding: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+a.col-6:hover > img,
+a.col-6:hover > .b-lazy {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(192,57,43,0.15);
+  border-color: var(--brand-red);
+}
+
+a.col-6 > p {
+  background: var(--card-bg);
+  border: 1px solid #e8e8e8;
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  margin: 0;
+  padding: 12px 14px 14px;
+  box-shadow: var(--shadow);
+}
+
+a.col-6 > p > span:first-child {
+  font-size: 0.9rem !important;
+  font-weight: 700;
+  color: var(--text-main);
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+a.col-6 > p > span:last-child {
+  font-size: 1rem !important;
+  color: var(--brand-red);
+  font-weight: 600;
+}
+
+/* ── Ürün Detay Sayfası ── */
+article.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+}
+
+article h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.product-actual-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-red);
+}
+
+.product-compare-price {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-right: 8px;
+}
+
+.product-not-in-stock {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+select {
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  margin: 4px 0 12px;
+  cursor: pointer;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--brand-red);
+}
+
+/* ── "Sold Out" badge ── */
+.font-weight-bold {
+  background: #e0e0e0;
+  color: #888;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.8rem;
+}
+
+/* ── Ürün görselleri (detay) ── */
+img.img-fluid {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-height: 420px;
+  object-fit: contain;
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+/* ── Ürün detay içerik başlıkları ── */
+article .container-fluid h2,
+article h2,
+.col-12 h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--brand-dark);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--brand-orange);
+}
+
+article .container-fluid h3,
+article h3,
+.col-12 h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 18px 0 8px;
+}
+
+article ul,
+.col-12 ul {
+  padding-left: 18px;
+  margin-bottom: 12px;
+}
+
+article ul li,
+.col-12 ul li {
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.8;
+}
+
+/* ── Genel içerik ── */
+p {
+  line-height: 1.75;
+  color: #555;
+}
+
+/* ── 404 ── */
+.error-page {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+/* ── Dil Seçici ── */
+.lang-dropdown {
+  position: relative;
+  margin-left: auto;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.22);
+  border-radius: 6px;
+  color: #ccc;
+  cursor: pointer;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.lang-toggle:hover,
+.lang-dropdown.open .lang-toggle {
+  border-color: var(--brand-orange);
+  color: var(--brand-orange);
+}
+
+.lang-arrow {
+  font-size: 0.6rem;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.lang-dropdown.open .lang-arrow {
+  transform: rotate(180deg);
+}
+
+.lang-menu {
+  display: none;
+  position: absolute;
+  right: 12px;
+  top: calc(100% + 8px);
+  background: #1e1e1e !important;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  list-style: none !important;
+  list-style-type: none !important;
+  margin: 0;
+  padding: 5px;
+  min-width: 130px;
+  z-index: 9999;
+}
+
+.lang-menu li {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+.lang-menu li::before,
+.lang-menu li::marker {
+  display: none !important;
+  content: none !important;
+}
+
+.lang-dropdown.open .lang-menu {
+  display: block;
+  animation: ldFade 0.15s ease;
+}
+
+@keyframes ldFade {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: #aaa;
+  cursor: pointer;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.85rem;
+  padding: 7px 14px;
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lang-btn:hover {
+  background: rgba(255,255,255,0.07);
+  color: #fff;
+}
+
+.lang-btn.lang-active {
+  color: var(--brand-orange);
+  font-weight: 700;
+  background: rgba(230,126,34,0.12);
+}
+
+/* ── Responsive ── */
+@media (max-width: 576px) {
+  header h1 { font-size: 1.6rem; letter-spacing: 1.5px; }
+  .navbar-nav .nav-link { padding: 10px 10px !important; font-size: 0.78rem; }
+  .lang-toggle { font-size: 0.72rem; padding: 4px 8px; }
+}
