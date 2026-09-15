@@ -381,11 +381,11 @@
       if (labelEl) labelEl.textContent = activeBtn.dataset.label || lang.toUpperCase();
     }
 
-    localStorage.setItem('thermex_lang', lang);
+    localStorage.setItem('lucente_lang', lang);
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    var saved = localStorage.getItem('thermex_lang') || 'tr';
+    var saved = localStorage.getItem('lucente_lang') || 'tr';
     applyLang(saved);
 
     /* Hamburger menü aç/kapat */
