@@ -2,7 +2,7 @@
     "title": "Tam Döküm Fırınlı Şömine",
     "date": "2026-09-11T00:00:00+03:00",
     "tags": ["Döküm Şömine", "Pelet", "Odun", "Isıtma"],
-    "categories": ["Pelet ve Odun Şöminesi"],
+    "categories": ["Fırınlı Şömine"],
     "images": ["img/vesta-pelet-odun-somine/1.png"],
     "thumbnailImage": "img/vesta-pelet-odun-somine/1.png",
     "actualPrice": "2222 ₾",

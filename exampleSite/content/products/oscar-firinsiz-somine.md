@@ -2,7 +2,7 @@
     "title": "Vesta Pelet ve Odun Şöminesi",
     "date": "2026-09-11T00:00:00+03:00",
     "tags": ["Döküm Şömine", "Fırınsız", "Odun", "Isıtma"],
-    "categories": ["Fırınsız Şömine"],
+    "categories": ["Pelet ve Odun Şöminesi"],
     "images": ["img/oscar-firinsiz-somine/1.png"],
     "thumbnailImage": "img/oscar-firinsiz-somine/1.png",
     "actualPrice": "1100 ₾",

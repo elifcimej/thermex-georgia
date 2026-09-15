@@ -2,7 +2,7 @@
     "title": "Küçük Plazma Şömine",
     "date": "2026-09-11T00:00:00+03:00",
     "tags": ["Döküm Şömine", "Kuzineli", "Odun", "Isıtma", "Pişirme"],
-    "categories": ["Kuzineli Şömine"],
+    "categories": ["Fırınsız Şömine"],
     "images": ["img/milan-kuzineli-somine/1.png"],
     "thumbnailImage": "img/milan-kuzineli-somine/1.png",
     "actualPrice": "1389 ₾",

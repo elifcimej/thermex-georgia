@@ -2,7 +2,7 @@
     "title": "Mercan Yatay Fırınlı Şömine",
     "date": "2026-09-11T00:00:00+03:00",
     "tags": ["Döküm Şömine", "Fırınsız", "Odun", "Isıtma"],
-    "categories": ["Fırınsız Şömine"],
+    "categories": ["Fırınlı Şömine"],
     "images": ["img/tam-dokum-firinsiz-somine/1.png"],
     "thumbnailImage": "img/tam-dokum-firinsiz-somine/1.png",
     "actualPrice": "1606 ₾",

@@ -2,7 +2,7 @@
     "title": "Caldera Pelet ve Odun Şöminesi",
     "date": "2026-09-11T00:00:00+03:00",
     "tags": ["Döküm Şömine", "Kompakt", "Odun", "Isıtma"],
-    "categories": ["Fırınsız Şömine"],
+    "categories": ["Pelet ve Odun Şöminesi"],
     "images": ["img/kucuk-plazma-somine/1.png"],
     "thumbnailImage": "img/kucuk-plazma-somine/1.png",
     "actualPrice": "1267 ₾",
