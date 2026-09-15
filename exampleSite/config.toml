@@ -1,7 +1,7 @@
 baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "Awesome Lighting Inc."
+languageCode = "tr"
+title = "THERMEX GEORGIA"
 theme = "hugo-shopping-product-catalogue-simple"
 themesDir = "../.."
 [Params]
-description = ""
+description = "Pelet Soba Uzmanı"
