@@ -1,6 +1,6 @@
 ﻿{
     "title": "Pelet Soba",
-    "date": "2026-09-11T00:00:00+03:00",
+    "date": "2026-09-15T03:00:00+03:00",
     "tags": ["Pelet Soba", "Isıtma", "Sade"],
     "categories": ["Pelet Soba"],
     "images": ["img/pelet-soba/1.jpg"],

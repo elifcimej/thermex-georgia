@@ -1,6 +1,6 @@
 ﻿{
     "title": "Fırınlı Pelet Soba",
-    "date": "2026-09-11T00:00:00+03:00",
+    "date": "2026-09-15T04:00:00+03:00",
     "tags": ["Pelet Soba", "Fırınlı", "Isıtma", "Pişirme"],
     "categories": ["Pelet Soba"],
     "images": ["img/firinli-pelet-soba/1.jpg"],

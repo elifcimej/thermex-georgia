@@ -1,6 +1,6 @@
 ﻿{
     "title": "Dik Pelet Soba",
-    "date": "2026-09-11T00:00:00+03:00",
+    "date": "2026-09-15T01:00:00+03:00",
     "tags": ["Pelet Soba", "Dik", "Tekerlekli", "Cam Kapı", "Isıtma"],
     "categories": ["Pelet Soba"],
     "images": ["img/dik-pelet-soba/1.jpg"],

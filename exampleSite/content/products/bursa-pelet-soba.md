@@ -1,6 +1,6 @@
 ﻿{
     "title": "Bursa Pelet Soba",
-    "date": "2026-09-11T00:00:00+03:00",
+    "date": "2026-09-15T06:00:00+03:00",
     "tags": ["Pelet Soba", "Dış Mekan", "Alev Görünümlü", "Tekerlekli"],
     "categories": ["Pelet Soba"],
     "images": ["img/bursa-pelet-soba/1.jpg"],

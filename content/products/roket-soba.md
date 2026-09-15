@@ -1,6 +1,6 @@
 ﻿{
     "title": "Roket Soba",
-    "date": "2026-09-11T00:00:00+03:00",
+    "date": "2026-09-15T05:00:00+03:00",
     "tags": ["Pelet Soba", "Roket", "Pişirme Tablası", "Dış Mekan"],
     "categories": ["Pelet Soba"],
     "images": ["img/roket-soba/1.jpg"],
